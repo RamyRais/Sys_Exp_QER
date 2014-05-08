@@ -11,6 +11,7 @@ public class Mesure {
 	private int x;
 	private int y;
 	private int z;
+	private double alpha; 
 	private Date  date;
 
 		
@@ -24,9 +25,20 @@ public class Mesure {
 			this.y = variationY;
 			this.z = variationZ;
 			this.date = date;
+			this.alpha = Math.acos((double)z/(double)128);
 		}
 		
 		
+		public double getAlpha() {
+			return alpha;
+		}
+
+
+		public void setAlpha(double alpha) {
+			this.alpha = alpha;
+		}
+
+
 		public int getCap() {
 			return cap;
 		}
@@ -87,10 +99,10 @@ public class Mesure {
 
 		@Override
 		public String toString() {
-			return "Mesures [latitude=" + latitude + ", longitude=" + longitude
-					+", cap="+ cap + ", vitesse=" + vitesse + ", X =" + this.x
-					+ ", Y =" + this.y + ", Z =" + this.z
-					+ ", date=" + date + "]";
+			return "Mesures [latitude= " + this.latitude + ", longitude= " + this.longitude
+					+", cap= "+ this.cap + ", vitesse= " + this.vitesse + ", X= " + this.x
+					+ ", Y= " + this.y + ", Z= " + this.z +" alpha= " + this.alpha
+					+ ", date= " + this.date + "]";
 		}
 
 }
