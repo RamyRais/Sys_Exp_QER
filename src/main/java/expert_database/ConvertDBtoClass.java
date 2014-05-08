@@ -26,8 +26,8 @@ public class ConvertDBtoClass {
 					if(datemesure.length()==5){ // test if it's a day between 1 and 9 then add zero else do nothing
 						datemesure = "0"+datemesure; // add the zero so the treatment stay the same 
 					}
-					String date1 = "20"+datemesure.substring(0,2)+"."
-							+datemesure.substring(2,4)+"."+datemesure.substring(4,6); //put the date in the format we want above
+					String date1 = "20"+datemesure.substring(4,6)+"."
+							+datemesure.substring(2,4)+"."+datemesure.substring(0,2); //put the date in the format we want above
 					
 					String time = result.getString(2);// get the time 
 					if(time.length()==5){// test if we have an hour between 1 and 9 we add zero so the treatment still the same 
