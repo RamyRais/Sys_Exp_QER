@@ -1,4 +1,4 @@
-package expert_database;
+package expert.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +12,9 @@ import expert.model.Mesure;
 public class ConvertDBtoClass {
 
 	
+		/*
+		 * this method return an arrayList of Mesure extracted from database after some pre-treatement
+		 */
 		public static ArrayList<Mesure> convert(ResultSet result){
 			
 			ArrayList<Mesure> mesureArray =null;
@@ -19,7 +22,7 @@ public class ConvertDBtoClass {
 			
 			try{
 				mesureArray =  new ArrayList<Mesure>();
-				//boucler sur les résultats de la requête
+				//iterate over the result of the query
 				while (result.next()) {
 				
 					String datemesure = result.getString(3);//get the date from  

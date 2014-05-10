@@ -102,7 +102,7 @@ public class Mesure {
 			return "Mesures [latitude= " + this.latitude + ", longitude= " + this.longitude
 					+", cap= "+ this.cap + ", vitesse= " + this.vitesse + ", X= " + this.x
 					+ ", Y= " + this.y + ", Z= " + this.z +" alpha= " + this.alpha
-					+ ", date= " + this.date + "]";
+					+ ", date= " + this.date + "]\n";
 		}
 
 }

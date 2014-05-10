@@ -1,4 +1,4 @@
-package expert_database;
+package expert.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,15 +17,19 @@ public class Dbcom {
 		private static Connection connect;
 		public static java.sql.Statement stmt;
 
+		/*
+		 * Method that execute an SQL query
+		 * @param stmt 
+		 * 			is the object statement for sending SQL query to the database
+		 * @param  requetSql
+		 * 			is the query that will be executed
+		 * 
+		 * @return the result of the query in an ResultSet object
+		 */
 		public static ResultSet resultatRequet(Statement stmt, String requetSql) {
 			
 			ResultSet rSet = null;
 			try {
-//				
-//				Connection conn = getInstance();
-//				Statement stmt = conn.createStatement();
-
-				
 
 				rSet = stmt.executeQuery(requetSql);
 				/*
@@ -36,9 +40,6 @@ public class Dbcom {
 					System.out.println(res);
 				}
 					*/
-
-				//conn.close();
-				//stmt.close();
 			} catch (SQLException eGetConn) {
 				eGetConn.printStackTrace();
 			} finally {
@@ -48,10 +49,9 @@ public class Dbcom {
 		}
 
 		/*
-		 * Méthode qui va nous retourner notre instance et la créer si elle n'existe
-		 * pas...
+		 * Method that return a connection instance if it exist or create one if not
 		 * 
-		 * @return
+		 * @return Connection object
 		 */
 		public static Connection getInstance() {
 			if (connect == null) {
@@ -67,7 +67,7 @@ public class Dbcom {
 					connect = DriverManager.getConnection(url, user, passwd);
 					stmt = connect.createStatement();
 
-					System.out.println("connection oumourha mrigula");
+					System.out.println("connected to the database");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
