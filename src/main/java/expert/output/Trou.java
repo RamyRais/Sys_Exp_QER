@@ -10,4 +10,9 @@ public class Trou extends Anomalie{
 		super(latitude, longitude, severite, date);
 	}
 	
+	@Override
+	public String toString() {
+		return "Trou "+ super.toString().substring(9);
+	}
+	
 }

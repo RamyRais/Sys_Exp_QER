@@ -8,5 +8,10 @@ public class Pente extends Anomalie {
 		
 		super(latitude, longitude, severite, date);
 	}
+	
+	@Override
+	public String toString() {
+		return "Pente "+ super.toString().substring(9);
+	}
 
 }

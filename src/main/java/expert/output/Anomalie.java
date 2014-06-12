@@ -94,7 +94,7 @@ public class Anomalie {
 	public String toString() {
 		return "Anomalie [latitude = " + latitude + ", longitude = " + longitude
 				+ ", coefficient = " + coefficient + ", severite = " + severite
-				+ ", nombreMesure = " + nombreMesure + ", date = " + date + "]";
+				+ ", nombreMesure = " + nombreMesure + ", date = " + date + "]\n";
 	}
 		
 	
