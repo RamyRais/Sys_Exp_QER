@@ -25,8 +25,8 @@ rule "Détecter Trou"
        	
     then
         //actions
-        //retract(m1);
         insert(new Trou(m1.getLatitude(),m1.getLongitude(),m1.getZ(),m1.getDate()));
+        retract(m1);
 end
 
 query "extract Trou minimale"

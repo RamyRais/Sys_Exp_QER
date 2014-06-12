@@ -1,0 +1,52 @@
+//created on: 7 juin 2014
+package expert.detection
+
+import expert.output.Trou;
+import expert.output.Dosdane;
+import expert.output.Pente;
+ 
+
+rule "mettre à jour 2 trous dans la même place"
+	salience 50
+	no-loop true
+    when
+        //conditions
+        t1 : Trou( $long : longitude , $lat : latitude , $date : date)
+        t2 : Trou( (longitude <= $long + 0.000004 && longitude >= $long - 0.000004) &&
+        		   (latitude <= $lat + 0.000004 && latitude >= $lat - 0.000004) && date != $date)
+        							 
+    then
+        //actions
+		t1.updateTrou(t2);
+		retract(t2);
+end
+
+rule "mettre à jour 2 dosdanes dans la même place"
+	salience 50
+	no-loop true
+    when
+        //conditions
+        d1 : Dosdane( $long : longitude , $lat : latitude , $date : date)
+        d2 : Dosdane( (longitude <= $long + 0.000004 && longitude >= $long - 0.000004) &&
+        		   (latitude <= $lat + 0.000004 && latitude >= $lat - 0.000004) && date != $date)
+        							 
+    then
+        //actions
+		d1.updateTrou(d2);
+		retract(d2);
+end
+
+rule "mettre à jour 2 pentes dans la même place"
+	salience 50
+	no-loop true
+    when
+        //conditions
+        p1 : Pente( $long : longitude , $lat : latitude , $date : date)
+        p2 : Pente( (longitude <= $long + 0.000004 && longitude >= $long - 0.000004) &&
+        		   (latitude <= $lat + 0.000004 && latitude >= $lat - 0.000004) && date != $date)
+        							 
+    then
+        //actions
+		p1.updateTrou(p2);
+		retract(p2);
+end

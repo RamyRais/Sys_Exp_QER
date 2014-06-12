@@ -1,0 +1,42 @@
+//created on: 12 juin 2014
+package expert.Rules
+
+//list any import classes here.
+import expert.output.*;
+import expert.model.Configuration;
+
+
+//declare any global variables here
+
+
+
+
+rule "Clean Trou"
+
+    when
+        
+        trou : Trou( severite < Configuration.trouSeuilMin || coefficient < Configuration.coeffConfig)
+    then
+        
+		retract(trou);
+end
+
+rule "Clean Dosdane"
+
+    when
+        
+        dosdane : Dosdane( severite < Configuration.dosdaneSeuilMin || coefficient < Configuration.coeffConfig)
+    then
+        
+		retract(dosdane);
+end
+
+rule "Clean Pente"
+
+    when
+        
+        pente : Pente( severite < Configuration.penteSeuilMin || coefficient < Configuration.coeffConfig)
+    then
+        
+		retract(pente);
+end
