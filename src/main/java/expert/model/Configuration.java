@@ -6,6 +6,7 @@ import java.util.Properties;
 
 public class Configuration {
 	 
+	public static double coeffConfig ;
 	public static double penteSeuilMin ;
 	public static double penteSeuilMoy ;
 	public static double penteSeuilMax ;
@@ -26,6 +27,7 @@ public class Configuration {
 	
 	private Configuration(){
 		prop = loadFile();
+		coeffConfig =   Double.valueOf(prop.getProperty("coeffConfig"));
 		penteSeuilMin =   Double.valueOf(prop.getProperty("penteSeuilMin"));
 		penteSeuilMoy = Double.valueOf(prop.getProperty("penteSeuilMoy"));
 		penteSeuilMax = Double.valueOf(prop.getProperty("penteSeuilMax"));
@@ -60,10 +62,19 @@ public class Configuration {
 	}
 	
 	public static String toStringa(){
-		return "Configuration [ penteSeuilMin = " + penteSeuilMin + " penteSeuilMoy = " + penteSeuilMoy+
-				" penteSeuilMax = " + penteSeuilMax + "\ntrouSeuilMin = " + trouSeuilMin + " trouSeuilMoy"+
-				trouSeuilMoy + " trouSeuilMax = " + trouSeuilMax + "\ndosdaneSeuilMin = " + dosdaneSeuilMin+
-				" dosdaneSeuilMoy = " + dosdaneSeuilMoy + " dosdaneSeuilMax = "+ dosdaneSeuilMin + "]";
+		return "Configuration [ penteSeuilMin = "+ penteSeuilMin +
+		" penteSeuilMoy = "+ penteSeuilMoy +
+		" penteSeuilMax = "+ penteSeuilMax +
+		" trouDiffMin = "+ trouDiffMin +
+		" trouAvantMax = "+ trouAvantMax +
+		" trouSeuilMin = "+ trouSeuilMin +
+		" trouSeuilMoy = "+ trouSeuilMoy +
+		" trouSeuilMax = "+ trouSeuilMax +
+		" dosdaneDiffmin = "+ dosdaneDiffmin +	
+		" dosdaneAvantMin = "+ dosdaneAvantMin +
+		" dosdaneSeuilMin = "+ dosdaneSeuilMin +
+		" dosdaneSeuilMoy = "+ dosdaneSeuilMoy +
+		" dosdaneSeuilMax = "+ dosdaneSeuilMax +"]";
 	}
 	
 	
