@@ -1,0 +1,46 @@
+//created on: 12 juin 2014
+package expert.detection
+
+import expert.model.Mesure;
+import expert.output.Dosdane;
+import expert.model.Configuration;
+
+
+rule "Détecter DosDane"
+	salience 101
+	no-loop true
+    when
+        //conditions
+        
+        m : Mesure( $time :  ( date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ), z > Configuration.dosdaneAvantMin )
+       	m1 : Mesure(  (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +1 &&
+       				  z - m.z > Configuration.dosdaneDiffmin && z > m.z , $diff : z - m.z )
+       	m2 : Mesure( ( (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +2 || 
+       				   (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +3)  &&
+       				   			  m1.z - z > $diff/2 )
+       	not (exists ( Dosdane( date == m1.getDate() ) ))
+       	
+    then
+        //actions
+        insert(new Dosdane(m1.getLatitude(), m1.getLongitude(), m1.getZ(), m1.getDate()));
+end
+
+query "extract Dosdane minimale"
+	
+	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMin && < Configuration.dosdaneSeuilMoy )
+end
+
+query "extract Dosdane moyenne"
+	
+	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMoy && < Configuration.dosdaneSeuilMax )
+end
+
+query "extract Dosdane maximale"
+	
+	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMax )
+end
+
+query "extract all Dosdane"
+	
+	dosdane : Dosdane()
+end

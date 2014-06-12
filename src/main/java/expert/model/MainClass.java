@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
 import org.kie.internal.KnowledgeBase;
 import org.kie.internal.KnowledgeBaseFactory;
 import org.kie.internal.builder.KnowledgeBuilder;
@@ -19,16 +21,22 @@ import org.kie.internal.runtime.StatefulKnowledgeSession;
 
 import expert.database.ConvertDBtoClass;
 import expert.database.Dbcom;
+import expert.output.Pente;
+import expert.output.Trou;
+import expert.output.Dosdane;
 public class MainClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Configuration conf = Configuration.getInstance();
+		//System.out.println(Configuration.toStringa());
+		
 		ArrayList<Mesure> a = new ArrayList<Mesure>();
 		try{
 		
 			Connection conn = Dbcom.getInstance();
 			Statement stmt = conn.createStatement();
-			ResultSet result = Dbcom.resultatRequet(stmt,"Select * from mesure LIMIT 0,100");
+			ResultSet result = Dbcom.resultatRequet(stmt,"Select * from mesure LIMIT 0,500");
 			a = ConvertDBtoClass.convert(result);
 			stmt.close();
 			conn.close();
@@ -37,54 +45,57 @@ public class MainClass {
 			e.printStackTrace();
 		}
 		
-		
-		ArrayList<IntervalleMesure> t = new ArrayList<IntervalleMesure>();
-		ArrayList<Mesure> inter = new ArrayList<Mesure>();
-		
-		
-		for(int i = 0;i<a.size();i++){
-			
-			inter.add(a.get(i));
-			if(inter.size()==10){
 				
-				t.add(new IntervalleMesure(inter));
-				inter.clear();
-			}
-		}
 		
 		
-		HashSet trouList = new HashSet();
-		HashSet penteList = new HashSet();
 		
 		KnowledgeBase kbase;
 		try {
 			kbase = readKnowledgeBase();
 		
         StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
-        ksession.setGlobal("trouList", trouList);
-        ksession.setGlobal("penteList", penteList);
-        for (IntervalleMesure interMes : t) {
+        
+        for (Mesure interMes : a) {
         	 ksession.insert(interMes);
 		}
-        ksession.insert(t.get(1));
+        
 		ksession.fireAllRules();
+		
+		System.out.println("***********  PENTE  ****************");
+		QueryResults results = ksession.getQueryResults( "extract all Pente" );
+		for ( QueryResultsRow row : results ) {
+			Pente p = ( Pente ) row.get( "pente" );
+			System.out.print( p );
+		}
+		System.out.println("\n***********   DOSDANE   ****************");
+		results = ksession.getQueryResults( "extract all Dosdane" );
+		for ( QueryResultsRow row : results ) {
+			Dosdane d = ( Dosdane ) row.get( "dosdane" );
+			System.out.print( d );
+		}
+		System.out.println("\n***********   TROU   ****************");
+		results = ksession.getQueryResults( "extract all Trou" );
+		for ( QueryResultsRow row : results ) {
+			Trou t = ( Trou ) row.get( "trou" );
+			System.out.print( t );
+		}
+		
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("***********TROU****************");
-		System.out.println(trouList.toString());
-		System.out.println("***********PENTE***************");
-		System.out.println(penteList.toString());
-		System.out.println("c bon youfa");
 		
+		
+		System.out.println("c bon youfa");		
 	}
 	
 	private static KnowledgeBase readKnowledgeBase() throws Exception {
         KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        kbuilder.add(ResourceFactory.newClassPathResource("trou.drl"), ResourceType.DRL);
-        kbuilder.add(ResourceFactory.newClassPathResource("pente.drl"), ResourceType.DRL);
+        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/trou.drl"), ResourceType.DRL);
+        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/pente.drl"), ResourceType.DRL);
+        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/Dosdane.drl"), ResourceType.DRL);
+        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/FetchForWebService.drl"), ResourceType.DRL);
         KnowledgeBuilderErrors errors = kbuilder.getErrors();
         if (errors.size() > 0) {
             for (KnowledgeBuilderError error: errors) {

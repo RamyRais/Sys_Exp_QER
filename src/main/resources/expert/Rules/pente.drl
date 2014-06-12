@@ -1,0 +1,37 @@
+package expert.detection
+ 
+
+import expert.model.Mesure;
+import expert.model.Configuration;
+import expert.output.Pente; 
+ 
+rule "detection pente "
+salience 103
+    when
+        //tester si l'angle de la pente est entre la valeur minimale et moyenne
+        m : Mesure( alpha > Configuration.penteSeuilMin)
+    then
+
+        insert(new Pente(m.getLatitude(), m.getLongitude(), m.getAlpha() ,m.getDate()));
+end
+
+
+query "extract pente minimale"
+	
+	penteMin : Pente( severite > Configuration.penteSeuilMin && < Configuration.penteSeuilMoy )
+end
+
+query "extract pente moyenne"
+	
+	penteMin : Pente( severite > Configuration.penteSeuilMoy && < Configuration.penteSeuilMax )
+end
+
+query "extract pente maximale"
+	
+	penteMin : Pente( severite > Configuration.penteSeuilMax )
+end
+
+query "extract all Pente"
+	
+	pente : Pente()
+end

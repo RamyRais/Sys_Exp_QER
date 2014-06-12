@@ -1,0 +1,50 @@
+//created on: 8 mai 2014
+package expert.detection
+
+
+
+import expert.model.Mesure;
+import expert.output.Trou;
+import expert.model.Configuration;
+
+global java.util.HashSet trouList; 
+
+rule "Détecter Trou"
+	salience 100
+	no-loop true
+    when
+        //conditions
+        
+        m : Mesure( $time :  ( date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ), z < Configuration.trouAvantMax )
+       	m1 : Mesure(  (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +1 &&
+       				  m.z - z > Configuration.trouDiffMin && z < m.z , $diff : z - m.z )
+       	m2 : Mesure( ( (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +2 || 
+       				   (date.getSeconds() + (60*date.getMinutes()) + (3600*date.getHours()) ) == $time +3) &&
+       				   			  z - m1.z > $diff/2 )
+       	not (exists ( Trou( date == m1.getDate() ) ))
+       	
+    then
+        //actions
+        //retract(m1);
+        insert(new Trou(m1.getLatitude(),m1.getLongitude(),m1.getZ(),m1.getDate()));
+end
+
+query "extract Trou minimale"
+	
+	trouMin : Trou( severite < Configuration.trouSeuilMin && > Configuration.trouSeuilMoy )
+end
+
+query "extract Trou moyenne"
+	
+	trouMin : Trou( severite < Configuration.trouSeuilMoy && > Configuration.trouSeuilMax )
+end
+
+query "extract Trou maximale"
+	
+	trouMin : Trou( severite < Configuration.trouSeuilMax )
+end
+
+query "extract all Trou"
+	
+	trou : Trou()
+end
