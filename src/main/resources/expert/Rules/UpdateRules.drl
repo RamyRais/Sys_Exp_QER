@@ -17,7 +17,7 @@ rule "mettre à jour 2 trous dans la même place"
         							 
     then
         //actions
-		t1.updateTrou(t2);
+		t1.updateAnomalie(t2);
 		retract(t2);
 end
 
@@ -32,7 +32,7 @@ rule "mettre à jour 2 dosdanes dans la même place"
         							 
     then
         //actions
-		d1.updateTrou(d2);
+		d1.updateAnomalie(d2);
 		retract(d2);
 end
 
@@ -47,6 +47,6 @@ rule "mettre à jour 2 pentes dans la même place"
         							 
     then
         //actions
-		p1.updateTrou(p2);
+		p1.updateAnomalie(p2);
 		retract(p2);
 end

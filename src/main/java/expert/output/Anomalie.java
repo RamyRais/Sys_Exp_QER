@@ -35,7 +35,7 @@ public class Anomalie {
 	 * Cette méthode sert a mettre à jour l'anomalie quand on a 2 anomalies dans la même longitude et latitude 
 	 * @param anomalie c'est la nouvelle anomalie détecter 
 	 */
-	public void updateTrou(Anomalie anomalie){
+	public void updateAnomalie(Anomalie anomalie){
 		
 		this.coefficient = (this.coefficient * this.nombreMesure + anomalie.getCoefficient())/(this.nombreMesure+1);
 		this.severite = (this.severite * this.nombreMesure + anomalie.getSeverite())/(this.nombreMesure+1);
