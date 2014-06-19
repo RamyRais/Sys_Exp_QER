@@ -61,7 +61,7 @@ public class Configuration {
 		return properties;
 	}
 	
-	public static String toStringa(){
+	public String toString(){
 		return "Configuration [ penteSeuilMin = "+ penteSeuilMin +
 		" penteSeuilMoy = "+ penteSeuilMoy +
 		" penteSeuilMax = "+ penteSeuilMax +
