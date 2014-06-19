@@ -19,24 +19,49 @@ import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.runtime.StatefulKnowledgeSession;
 
+import sun.font.CreatedFontTracker;
 import expert.database.ConvertDBtoClass;
 import expert.database.Dbcom;
 import expert.output.Pente;
 import expert.output.Trou;
 import expert.output.Dosdane;
-public class MainClass {
 
+public class BaseFait {
+	   
+	private static StatefulKnowledgeSession session = null ;
+	
+	public static StatefulKnowledgeSession getSession(){
+		
+		if (session == null){
+			session = createSession();
+		}
+		return session;
+	}
+	
+	public static StatefulKnowledgeSession createSession(){
+		KnowledgeBase kbase = null;
+		StatefulKnowledgeSession ksession= null;
+		try {
+			kbase = readKnowledgeBase();
+			ksession = kbase.newStatefulKnowledgeSession();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ksession;
+    }
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Configuration conf = Configuration.getInstance();
 		//System.out.println(Configuration.toStringa());
-		
+		 
 		ArrayList<Mesure> a = new ArrayList<Mesure>();
 		try{
 		
 			Connection conn = Dbcom.getInstance();
 			Statement stmt = conn.createStatement();
-			ResultSet result = Dbcom.resultatRequet(stmt,"Select * from mesure LIMIT 0,500");
+			ResultSet result = Dbcom.resultatRequet(stmt,"Select * from mesure LIMIT 0,1000");
 			a = ConvertDBtoClass.convert(result);
 			stmt.close();
 			conn.close();
@@ -47,34 +72,29 @@ public class MainClass {
 		
 				
 		
+		try{
+			session = getSession();
 		
-		
-		KnowledgeBase kbase;
-		try {
-			kbase = readKnowledgeBase();
-		
-        StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
-        
         for (Mesure interMes : a) {
-        	 ksession.insert(interMes);
+        	 session.insert(interMes);
 		}
         
-		ksession.fireAllRules();
+		session.fireAllRules();
 		
 		System.out.println("***********  PENTE  ****************");
-		QueryResults results = ksession.getQueryResults( "extract all Pente" );
+		QueryResults results = session.getQueryResults( "extract all Pente" );
 		for ( QueryResultsRow row : results ) {
 			Pente p = ( Pente ) row.get( "pente" );
 			System.out.print( p );
 		}
 		System.out.println("\n***********   DOSDANE   ****************");
-		results = ksession.getQueryResults( "extract all Dosdane" );
+		results = session.getQueryResults( "extract all Dosdane" );
 		for ( QueryResultsRow row : results ) {
 			Dosdane d = ( Dosdane ) row.get( "dosdane" );
 			System.out.print( d );
 		}
 		System.out.println("\n***********   TROU   ****************");
-		results = ksession.getQueryResults( "extract all Trou" );
+		results = session.getQueryResults( "extract all Trou" );
 		for ( QueryResultsRow row : results ) {
 			Trou t = ( Trou ) row.get( "trou" );
 			System.out.print( t );
@@ -95,7 +115,7 @@ public class MainClass {
         kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/trou.drl"), ResourceType.DRL);
         kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/pente.drl"), ResourceType.DRL);
         kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/Dosdane.drl"), ResourceType.DRL);
-        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/FetchForWebService.drl"), ResourceType.DRL);
+        kbuilder.add(ResourceFactory.newClassPathResource("expert/Rules/UpdateRules.drl"), ResourceType.DRL);
         KnowledgeBuilderErrors errors = kbuilder.getErrors();
         if (errors.size() > 0) {
             for (KnowledgeBuilderError error: errors) {
