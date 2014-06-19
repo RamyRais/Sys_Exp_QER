@@ -44,3 +44,7 @@ query "extract all Dosdane"
 	
 	dosdane : Dosdane()
 end
+
+query "fetch for a Dosdane at longit and lat"(double lat,double longit)
+	dosdane : Dosdane( longitude == longit && latitude == lat )
+end

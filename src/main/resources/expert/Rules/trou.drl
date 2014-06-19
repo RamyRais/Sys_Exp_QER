@@ -48,3 +48,7 @@ query "extract all Trou"
 	
 	trou : Trou()
 end
+
+query "fetch for a Trou at longit and lat"(double lat,double longit)
+	trou : Trou( longitude == longit && latitude == lat )
+end

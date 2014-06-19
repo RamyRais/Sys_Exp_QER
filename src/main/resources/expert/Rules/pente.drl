@@ -35,3 +35,7 @@ query "extract all Pente"
 	
 	pente : Pente()
 end
+
+query "fetch for a Pente at longit and lat"(double lat,double longit)
+	pente : Pente( longitude == longit && latitude == lat )
+end
