@@ -16,19 +16,19 @@ salience 103
 end
 
 
-query "extract pente minimale"
+query "extract Pente minimale"
 	
-	penteMin : Pente( severite > Configuration.penteSeuilMin && < Configuration.penteSeuilMoy )
+	pente : Pente( severite > Configuration.penteSeuilMin && < Configuration.penteSeuilMoy )
 end
 
-query "extract pente moyenne"
+query "extract Pente moyenne"
 	
-	penteMin : Pente( severite > Configuration.penteSeuilMoy && < Configuration.penteSeuilMax )
+	pente : Pente( severite > Configuration.penteSeuilMoy && < Configuration.penteSeuilMax )
 end
 
-query "extract pente maximale"
+query "extract Pente maximale"
 	
-	penteMin : Pente( severite > Configuration.penteSeuilMax )
+	pente : Pente( severite > Configuration.penteSeuilMax )
 end
 
 query "extract all Pente"

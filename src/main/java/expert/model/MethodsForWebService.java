@@ -14,7 +14,13 @@ public class MethodsForWebService {
 
 	StatefulKnowledgeSession ksession = null;
 	
-	
+	public MethodsForWebService(StatefulKnowledgeSession ksession){
+		if(ksession == null){
+			throw new IllegalArgumentException("la session passé en argument est null");
+		}else{
+			this.ksession=ksession;
+		}
+	}
 	
 	public ArrayList<Trou> getTrouXY(double longitude,double latitude){
 		QueryResults results = ksession.getQueryResults("fetch for a Trou at longit and lat",longitude,latitude);
@@ -76,7 +82,7 @@ public class MethodsForWebService {
 		return trouList ;
 	}
 	
-	public ArrayList<Dosdane> getALLDosdane(){
+	public ArrayList<Dosdane> getAllDosdane(){
 		QueryResults results = ksession.getQueryResults("extract all Dosdane");
 		ArrayList<Dosdane> trouList = new ArrayList<Dosdane>();
 		for ( QueryResultsRow row : results ) {

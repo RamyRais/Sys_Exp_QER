@@ -27,17 +27,17 @@ end
 
 query "extract Dosdane minimale"
 	
-	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMin && < Configuration.dosdaneSeuilMoy )
+	dosdane : Dosdane( severite > Configuration.dosdaneSeuilMin && < Configuration.dosdaneSeuilMoy )
 end
 
 query "extract Dosdane moyenne"
 	
-	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMoy && < Configuration.dosdaneSeuilMax )
+	dosdane : Dosdane( severite > Configuration.dosdaneSeuilMoy && < Configuration.dosdaneSeuilMax )
 end
 
 query "extract Dosdane maximale"
 	
-	dosdaneMin : Dosdane( severite > Configuration.dosdaneSeuilMax )
+	dosdane : Dosdane( severite > Configuration.dosdaneSeuilMax )
 end
 
 query "extract all Dosdane"

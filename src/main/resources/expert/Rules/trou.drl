@@ -31,17 +31,17 @@ end
 
 query "extract Trou minimale"
 	
-	trouMin : Trou( severite < Configuration.trouSeuilMin && > Configuration.trouSeuilMoy )
+	trou : Trou( severite < Configuration.trouSeuilMin && > Configuration.trouSeuilMoy )
 end
 
 query "extract Trou moyenne"
 	
-	trouMin : Trou( severite < Configuration.trouSeuilMoy && > Configuration.trouSeuilMax )
+	trou : Trou( severite < Configuration.trouSeuilMoy && > Configuration.trouSeuilMax )
 end
 
 query "extract Trou maximale"
 	
-	trouMin : Trou( severite < Configuration.trouSeuilMax )
+	trou : Trou( severite < Configuration.trouSeuilMax )
 end
 
 query "extract all Trou"

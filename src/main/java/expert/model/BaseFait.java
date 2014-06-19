@@ -73,6 +73,8 @@ public class BaseFait {
 				
 		
 		try{
+			
+			
 			session = getSession();
 		
         for (Mesure interMes : a) {
@@ -80,7 +82,7 @@ public class BaseFait {
 		}
         
 		session.fireAllRules();
-		
+		/*
 		System.out.println("***********  PENTE  ****************");
 		QueryResults results = session.getQueryResults( "extract all Pente" );
 		for ( QueryResultsRow row : results ) {
@@ -99,12 +101,49 @@ public class BaseFait {
 			Trou t = ( Trou ) row.get( "trou" );
 			System.out.print( t );
 		}
-		
+		*/
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		MethodsForWebService m = new MethodsForWebService(session);
+		System.out.println("\n***********   DOSDANE MAX  ****************");
+		System.out.println(m.getAllDosdaneMax());
+		
+		System.out.println("\n***********   DOSDANE MOY  ****************");
+		System.out.println(m.getAllDosdaneMoy());
+		
+		System.out.println("\n***********   DOSDANE MIN  ****************");
+		System.out.println(m.getAllDosdaneMin());
+		
+		System.out.println("\n***********   DOSDANEALL  ****************");
+		System.out.println(m.getAllDosdane());
+		
+		System.out.println("\n***********   PENTE MAX  ****************");
+		System.out.println(m.getAllPenteMax());
+		
+		System.out.println("\n***********   PENTE MOY  ****************");
+		System.out.println(m.getAllPenteMoy());
+		
+		System.out.println("\n***********   PENTE MIN  ****************");
+		System.out.println(m.getAllPenteMin());
+		
+		System.out.println("\n***********   PENTE ALL  ****************");
+		System.out.println(m.getAllPente());
+		
+		System.out.println("\n***********   TROU MAX  ****************");
+		System.out.println(m.getAllTrouMax());
+		
+		System.out.println("\n***********   TROU MOY  ****************");
+		System.out.println(m.getAllTrouMoy());
+		
+		System.out.println("\n***********   TROU MIN  ****************");
+		System.out.println(m.getAllTrouMin());
+		
+		System.out.println("\n***********   TROU ALL  ****************");
+		System.out.println(m.getAllTrou());
 		
 		
 		System.out.println("c bon youfa");		
